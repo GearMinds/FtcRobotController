@@ -23,13 +23,13 @@ public class TeleOpMode extends LinearOpMode {
     final int ARM_WINCH_ROBOT   = (int) (15 * ARM_TPD);
 
     // wrist pre-defined constants
-    final double WRIST_FOLDED_IN  = 0.8333;
+    final double WRIST_FOLDED_IN  = 0.85;
     final double WRIST_FOLDED_OUT = 0.5;
 
     private DcMotor setupDriveMotor(String label) {
         DcMotor driveMotor = hardwareMap.get(DcMotor.class, label);
 
-        driveMotor.setDirection(DcMotorSimple.Direction.REVERSE); // both our motors are reversed
+        driveMotor.setDirection(DcMotorSimple.Direction.FORWARD); // both our motors are forward
         driveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         return driveMotor;
@@ -54,6 +54,7 @@ public class TeleOpMode extends LinearOpMode {
 
     private Servo setupWristServo(String label) {
         Servo wrist = hardwareMap.get(Servo.class, label);
+        wrist.resetDeviceConfigurationForOpMode();
         wrist.setPosition(WRIST_FOLDED_IN);
         return wrist;
     }
@@ -76,8 +77,8 @@ public class TeleOpMode extends LinearOpMode {
 
         while (opModeIsActive()) {
             // set up control sticks
-            double l = -gamepad1.left_stick_y + gamepad1.right_stick_x;
-            double r = -gamepad1.left_stick_y - gamepad1.right_stick_x;
+            double l = -gamepad1.left_stick_y - gamepad1.right_stick_x;
+            double r = -gamepad1.left_stick_y + gamepad1.right_stick_x;
             double overflow = Math.max(Math.abs(l), Math.abs(r));
 
             if (overflow > 1.0) {
@@ -85,13 +86,13 @@ public class TeleOpMode extends LinearOpMode {
                 r /= overflow;
             }
 
-            lDrive.setPower(l);
-            rDrive.setPower(r);
+            lDrive.setPower(l / 2);
+            rDrive.setPower(r / 2);
 
             // control wrist
             if (gamepad1.right_trigger > 0.5) // RT -> fold wrist in
                 wrist.setPosition(WRIST_FOLDED_IN);
-            if (gamepad1.right_trigger > 0.5) // LT -> fold wrist out
+            if (gamepad1.left_trigger > 0.5) // LT -> fold wrist out
                 wrist.setPosition(WRIST_FOLDED_OUT);
 
             // intake mappings
