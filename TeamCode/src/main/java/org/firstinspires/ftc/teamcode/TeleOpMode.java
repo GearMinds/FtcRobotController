@@ -18,7 +18,7 @@ public class TeleOpMode extends LinearOpMode {
     final int ARM_INITIAL       = 0;
     final int ARM_COLLECT       = (int) (250 * ARM_TPD);
     final int ARM_CLEAR_BARRIER = (int) (230 * ARM_TPD);
-    final int ARM_SCORE_SAMPLES = (int) (160 * ARM_TPD);
+    final int ARM_SCORE_SAMPLES = (int) (155 * ARM_TPD);
     final int ARM_STRAIGHT_UP   = (int) (120 * ARM_TPD);
     final int ARM_WINCH_ROBOT   = (int) (15 * ARM_TPD);
 
