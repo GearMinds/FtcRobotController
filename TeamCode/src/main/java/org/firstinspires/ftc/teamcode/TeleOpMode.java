@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name="Tele Op", group="Robot")
+@TeleOp(name="Tele Op Mode", group="Robot")
 public class TeleOpMode extends LinearOpMode {
     // Arm ticks per degree of rotation
     // comes out to around 19.792489314064724
@@ -26,10 +26,10 @@ public class TeleOpMode extends LinearOpMode {
     final double WRIST_FOLDED_IN  = 0.85;
     final double WRIST_FOLDED_OUT = 0.5;
 
-    private DcMotor setupDriveMotor(String label) {
+    private DcMotor setupDriveMotor(String label, DcMotorSimple.Direction direction) {
         DcMotor driveMotor = hardwareMap.get(DcMotor.class, label);
 
-        driveMotor.setDirection(DcMotorSimple.Direction.FORWARD); // both our motors are forward
+        driveMotor.setDirection(direction);
         driveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         return driveMotor;
@@ -61,8 +61,8 @@ public class TeleOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        DcMotor lDrive = setupDriveMotor("l_drive");
-        DcMotor rDrive = setupDriveMotor("r_drive");
+        DcMotor lDrive = setupDriveMotor("l_drive", DcMotorSimple.Direction.REVERSE);
+        DcMotor rDrive = setupDriveMotor("r_drive", DcMotorSimple.Direction.FORWARD);
         DcMotor arm = setupArmMotor("arm");
 
         CRServo intake = setupIntakeServo("intake");
@@ -77,8 +77,8 @@ public class TeleOpMode extends LinearOpMode {
 
         while (opModeIsActive()) {
             // set up control sticks
-            double l = -gamepad1.left_stick_y - gamepad1.right_stick_x;
-            double r = -gamepad1.left_stick_y + gamepad1.right_stick_x;
+            double l = -gamepad1.left_stick_y + gamepad1.right_stick_x;
+            double r = -gamepad1.left_stick_y - gamepad1.right_stick_x;
             double overflow = Math.max(Math.abs(l), Math.abs(r));
 
             if (overflow > 1.0) {
