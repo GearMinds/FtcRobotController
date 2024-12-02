@@ -78,12 +78,7 @@ public class AutoOpMode extends LinearOpMode {
             setDriveMotorsMode(DcMotor.RunMode.RUN_TO_POSITION);
             setDriveMotorsPower(Math.abs(speed));
 
-            while (opModeIsActive() && driveMotorsAreBusy()) {
-                telemetry.addData("target", inches * CPI);
-                telemetry.addData("l pos", lDrive.getCurrentPosition());
-                telemetry.addData("r pos", rDrive.getCurrentPosition());
-                telemetry.update();
-            }
+            while (opModeIsActive() && driveMotorsAreBusy());
 
             setDriveMotorsPower(0);
             setDriveMotorsMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -94,10 +89,6 @@ public class AutoOpMode extends LinearOpMode {
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
     }
 
-    private double getCorrectionError(double heading) {
-        return heading - getHeading();
-    }
-
     private double getCorrectionPower(double error, double gain, double max) {
         while (error > 180) error -= 360;
         while (error <= -180) error += 360;
@@ -106,17 +97,22 @@ public class AutoOpMode extends LinearOpMode {
     }
 
     private void turnFor(double angle, double speed) {
-        double power, error = getCorrectionError(angle);
+        double power, error = angle - getHeading();
 
         while (opModeIsActive() && Math.abs(error) > 1.0) {
-            error = getCorrectionError(angle);
+            error = angle - getHeading();
             power = getCorrectionPower(error, 0.02, speed);
 
-            lDrive.setPower(-power);
-            rDrive.setPower(power);
+            telemetry.addData("error", error);
+            telemetry.addData("power", power);
+            telemetry.update();
+
+            lDrive.setPower(power);
+            rDrive.setPower(-power);
         }
 
         setDriveMotorsPower(0);
+        imu.resetYaw();
     }
 
     @Override
@@ -129,10 +125,10 @@ public class AutoOpMode extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            driveFor(5, 0.2);
+            driveFor(10, 0.5);
             sleep(2000);
 
-            turnFor(90, 0.2);
+            turnFor(90, 0.5);
             sleep(2000);
         }
     }
