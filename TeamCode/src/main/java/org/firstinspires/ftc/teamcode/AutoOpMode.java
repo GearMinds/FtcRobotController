@@ -5,6 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+
+import java.util.Random;
 
 @Autonomous(name="Autonomous Mode", group="Robot")
 public class AutoOpMode extends LinearOpMode {
@@ -17,6 +24,7 @@ public class AutoOpMode extends LinearOpMode {
     private final double CPI = (1425.2 / 4.0) / (4.0 * 3.14159);
 
     DcMotor lDrive, rDrive;
+    IMU imu;
 
     private DcMotor setupDriveMotor(String label, DcMotorSimple.Direction direction) {
         DcMotor driveMotor = hardwareMap.get(DcMotor.class, label);
@@ -26,6 +34,20 @@ public class AutoOpMode extends LinearOpMode {
         driveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         return driveMotor;
+    }
+
+    public IMU setupIMU(String label) {
+        IMU imu = hardwareMap.get(IMU.class, label);
+
+        RevHubOrientationOnRobot orientation = new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
+        );
+
+        imu.initialize(new IMU.Parameters(orientation));
+        imu.resetYaw();
+
+        return imu;
     }
 
     private void setDriveMotorsTargetPosition(double inches) {
@@ -68,16 +90,49 @@ public class AutoOpMode extends LinearOpMode {
         }
     }
 
+    private double getHeading() {
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+    }
+
+    private double getCorrectionError(double heading) {
+        return heading - getHeading();
+    }
+
+    private double getCorrectionPower(double error, double gain, double max) {
+        while (error > 180) error -= 360;
+        while (error <= -180) error += 360;
+
+        return Range.clip(Range.clip(error * gain, -1.0, 1.0), -max, max);
+    }
+
+    private void turnFor(double angle, double speed) {
+        double power, error = getCorrectionError(angle);
+
+        while (opModeIsActive() && Math.abs(error) > 1.0) {
+            error = getCorrectionError(angle);
+            power = getCorrectionPower(error, 0.02, speed);
+
+            lDrive.setPower(-power);
+            rDrive.setPower(power);
+        }
+
+        setDriveMotorsPower(0);
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
 
         lDrive = setupDriveMotor("l_drive", DcMotorSimple.Direction.REVERSE);
         rDrive = setupDriveMotor("r_drive", DcMotorSimple.Direction.FORWARD);
+        imu = setupIMU("imu");
 
         waitForStart();
 
         while (opModeIsActive()) {
-            driveFor(5.0, 0.1);
+            driveFor(5, 0.2);
+            sleep(2000);
+
+            turnFor(90, 0.2);
             sleep(2000);
         }
     }
