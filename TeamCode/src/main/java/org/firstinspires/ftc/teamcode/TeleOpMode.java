@@ -77,8 +77,8 @@ public class TeleOpMode extends LinearOpMode {
 
         while (opModeIsActive()) {
             // set up control sticks
-            double l = -gamepad1.left_stick_y + gamepad1.right_stick_x;
-            double r = -gamepad1.left_stick_y - gamepad1.right_stick_x;
+            double l = -gamepad1.left_stick_y - gamepad1.right_stick_x;
+            double r = -gamepad1.left_stick_y + gamepad1.right_stick_x;
             double overflow = Math.max(Math.abs(l), Math.abs(r));
 
             if (overflow > 1.0) {
