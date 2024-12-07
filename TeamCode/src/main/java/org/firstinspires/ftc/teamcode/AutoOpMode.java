@@ -173,16 +173,19 @@ public class AutoOpMode extends LinearOpMode {
         moveArm(ARM_COLLECT);
         intakePull();
         wristOut();
+        sleep(2000);
     }
 
     private void scoreMode() {
         moveArm(ARM_SCORE_SAMPLES);
+        sleep(2000);
     }
 
     private void homeMode() {
         moveArm(ARM_INITIAL);
         intakeOff();
         wristIn();
+        sleep(2000);
     }
 
     private void setupDevices() {
@@ -211,25 +214,26 @@ public class AutoOpMode extends LinearOpMode {
         // EXAMPLE 1:
         // start collecting, move forward, turn and score, then fold the robot up
         collectMode();                  // 1. start collecting
-        sleep(2000);
 
         driveFor(10, 1.0); // 2. move forward (10 inches)
 
         sleep(1000);
+
         scoreMode();                    // 3. move arm into score position
         intakeOff();                    // 3a. turn off intake
         sleep(1000);
 
         turnFor(-45, 0.5);  // 4. turn, perhaps the goal is at a diagonal to the left
         sleep(1000);
-        driveFor(5, 0.2);  // 4a. drive slowly the goal may be slightly out of reach
+        driveFor(10, 0.2);  // 4a. drive slowly forward to simulate approaching the goal
 
         sleep(1000);
         intakePush();                   // 5. score by pushing out whatever is in the intake feeder
-        sleep(3000);
+        sleep(2000);
+        intakeOff();
+        sleep(1000);
 
         homeMode();                     // 6. fold the robot back up
-        sleep(2000);
 
         sleep(5000); // wait for 2nd example
 
