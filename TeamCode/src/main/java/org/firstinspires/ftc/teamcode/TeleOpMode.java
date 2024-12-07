@@ -136,6 +136,21 @@ public class TeleOpMode extends LinearOpMode {
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // send relevant data to driver station
+            telemetry.addLine("L Analog: Forward / Backward");
+            telemetry.addLine("R Analog: Left / Right");
+            telemetry.addLine();
+            telemetry.addLine("R Bumper: Feed Mode");
+            telemetry.addLine("L Bumper: Clear Lower Barrier");
+            telemetry.addLine("Y: Score Mode");
+            telemetry.addLine();
+            telemetry.addLine("A: Intake Pull");
+            telemetry.addLine("B: Intake Push");
+            telemetry.addLine("X: Intake Off");
+            telemetry.addLine();
+            telemetry.addLine("DPad Right: Home Mode");
+            telemetry.addLine();
+            telemetry.addLine("Hanging: 1. DPad Up, 2. DPad Right, 3. DPad Down");
+            telemetry.addLine();
             telemetry.addData("Right Motor", rDrive.getPower());
             telemetry.addData(" Left Motor", lDrive.getPower());
             telemetry.addData("        Arm", armPosition);
