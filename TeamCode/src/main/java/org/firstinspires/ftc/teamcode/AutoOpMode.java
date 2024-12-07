@@ -44,6 +44,7 @@ public class AutoOpMode extends LinearOpMode {
     private DcMotor setupDriveMotor(String label, DcMotorSimple.Direction direction) {
         DcMotor driveMotor = hardwareMap.get(DcMotor.class, label);
 
+        driveMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         driveMotor.setDirection(direction); // both our motors are forward
         driveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         driveMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -211,42 +212,55 @@ public class AutoOpMode extends LinearOpMode {
         // in understanding how the code works
         // for now it just drives in a square
 
+        // arm:
+        // collectMode(), scoreMode(), homeMode()
+        // intakePull(), intakePush(), intakeOff()
+        // wristIn(), wristOut()
+        // drive:
+        // driveFor(distance in inches, speed)
+        // turnFor(angle in degrees, speed)
+
         // EXAMPLE 1:
         // start collecting, move forward, turn and score, then fold the robot up
-        collectMode();                  // 1. start collecting
+//        collectMode(); // 1. start collecting
+//
+//        driveFor(10, 1.0); // 2. move forward (10 inches, 100%)
+//
+//        sleep(1000);
+//
+//        scoreMode(); // 3. move arm into score position
+//        intakeOff(); // 3a. turn off intake
+//        sleep(1000);
+//
+//        turnFor(-45, 0.5);  // 4. turn, perhaps the goal is at a diagonal to the left
+//        // turns 45* to the right, at 50% speed
+//        sleep(1000);
+//        driveFor(10, 0.2);  // 4a. drive slowly forward to simulate approaching the goal
+//        // drives 10 inches forward at 20% speed
+//
+//        sleep(1000);
+//        intakePush(); // 5. score by pushing out whatever is in the intake feeder
+//        sleep(2000);
+//        intakeOff();
+//        sleep(1000);
+//
+//        homeMode(); // 6. fold the robot back up
 
-        driveFor(10, 1.0); // 2. move forward (10 inches)
+//        sleep(5000); // wait for 2nd example
 
+        //When: sample preload into basket + basket zone start
+        wristOut();
+        scoreMode();
+        driveFor(7, 0.5);
+        sleep(1000);
+        intakePush();
+        sleep(1000);
+        driveFor(-55, 0.5);
+        sleep(1000);
+        homeMode();
+        turnFor(90, 0.5);
         sleep(1000);
 
-        scoreMode();                    // 3. move arm into score position
-        intakeOff();                    // 3a. turn off intake
-        sleep(1000);
-
-        turnFor(-45, 0.5);  // 4. turn, perhaps the goal is at a diagonal to the left
-        sleep(1000);
-        driveFor(10, 0.2);  // 4a. drive slowly forward to simulate approaching the goal
-
-        sleep(1000);
-        intakePush();                   // 5. score by pushing out whatever is in the intake feeder
-        sleep(2000);
-        intakeOff();
-        sleep(1000);
-
-        homeMode();                     // 6. fold the robot back up
-
-        sleep(5000); // wait for 2nd example
-
-        // EXAMPLE 2:
-        // run in a square forever 10x10 inches
-        // - sleep for 2 seconds between each instruction
-        // - run at half speed
-        while (opModeIsActive()) { // forever
-            driveFor(10, 0.5); // straight line for 10 inches
-            sleep(2000);
-
-            turnFor(90, 0.5); // 90 deg turn
-            sleep(2000);
-        }
+        
     }
 }
