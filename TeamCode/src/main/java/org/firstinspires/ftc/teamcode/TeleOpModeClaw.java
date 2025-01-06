@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name="Tele Op Mode", group="Robot")
-public class TeleOpMode extends LinearOpMode {
+@TeleOp(name="Tele Op Mode (Claw)", group="Robot")
+public class TeleOpModeClaw extends LinearOpMode {
     // Arm ticks per degree of rotation
     // comes out to around 19.792489314064724
     final double ARM_TPD = 28 * 250047.0 / 4913.0 * 100.0 / 20.0 * 1/360.0;
@@ -25,6 +25,9 @@ public class TeleOpMode extends LinearOpMode {
     // wrist pre-defined constants
     final double WRIST_FOLDED_IN  = 0.85;
     final double WRIST_FOLDED_OUT = 0.5;
+
+    final double CLAW_OPEN = 0.65;
+    final double CLAW_CLOSED = 0.95;
 
     private DcMotor setupDriveMotor(String label, DcMotorSimple.Direction direction) {
         DcMotor driveMotor = hardwareMap.get(DcMotor.class, label);
@@ -46,10 +49,10 @@ public class TeleOpMode extends LinearOpMode {
         return arm;
     }
 
-    private CRServo setupIntakeServo(String label) {
-        CRServo intake = hardwareMap.get(CRServo.class, label);
-        intake.setPower(0); // make sure the intake is not powered on
-        return intake;
+    private Servo setupClawServo(String label) {
+        Servo claw = hardwareMap.get(Servo.class, label);
+        claw.setPosition(CLAW_OPEN);
+        return claw;
     }
 
     private Servo setupWristServo(String label) {
@@ -65,7 +68,7 @@ public class TeleOpMode extends LinearOpMode {
         DcMotor rDrive = setupDriveMotor("r_drive", DcMotorSimple.Direction.FORWARD);
         DcMotor arm = setupArmMotor("arm");
 
-        CRServo intake = setupIntakeServo("intake");
+        Servo claw = setupClawServo("claw");
         Servo wrist = setupWristServo("wrist");
 
         int armPosition = ARM_INITIAL;
@@ -91,17 +94,14 @@ public class TeleOpMode extends LinearOpMode {
 
             // control wrist
             if (gamepad1.right_trigger > 0.5) // RT -> fold wrist in
-                wrist.setPosition(WRIST_FOLDED_IN);
+                armPosition += 1;
             if (gamepad1.left_trigger > 0.5) // LT -> fold wrist out
-                wrist.setPosition(WRIST_FOLDED_OUT);
+                armPosition -= 1;
 
-            // intake mappings
-            if (gamepad1.a) // A -> collect
-                intake.setPower(-1.0);
-            if (gamepad1.b) // B -> deposit
-                intake.setPower(0.5);
-            if (gamepad1.x) // X -> off
-                intake.setPower(0.0);
+            if (gamepad1.a)
+                    claw.setPosition(CLAW_CLOSED);
+            if (gamepad1.b)
+                    claw.setPosition(CLAW_OPEN);
 
             // arm position mappings
             if (gamepad1.y) // Y -> Move arm to score in the basket
@@ -115,13 +115,11 @@ public class TeleOpMode extends LinearOpMode {
 
             if (gamepad1.right_bumper) { // RB -> Move arm to intake position and turn on intake
                 wrist.setPosition(WRIST_FOLDED_OUT);
-                intake.setPower(-1.0);
                 armPosition = ARM_COLLECT;
             }
 
             if (gamepad1.dpad_left) { // D-Left -> Reset arm to original position
                 wrist.setPosition(WRIST_FOLDED_IN);
-                intake.setPower(0.0);
                 armPosition = ARM_INITIAL;
             }
 
@@ -155,7 +153,7 @@ public class TeleOpMode extends LinearOpMode {
             telemetry.addData(" Left Motor", lDrive.getPower());
             telemetry.addData("        Arm", armPosition);
             telemetry.addData("      Wrist", wrist.getPosition());
-            telemetry.addData("     Intake", intake.getPower());
+            telemetry.addData("     Intake", claw.getPosition());
             telemetry.update();
         }
     }

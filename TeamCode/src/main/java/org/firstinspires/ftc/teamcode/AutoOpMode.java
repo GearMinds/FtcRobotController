@@ -249,18 +249,30 @@ public class AutoOpMode extends LinearOpMode {
 //        sleep(5000); // wait for 2nd example
 
         //When: sample preload into basket + basket zone start
-        wristOut();
-        scoreMode();
-        driveFor(7, 0.5);
-        sleep(1000);
-        intakePush();
-        sleep(1000);
-        driveFor(-55, 0.5);
-        sleep(1000);
-        homeMode();
-        turnFor(90, 0.5);
-        sleep(1000);
+        driveFor(4, 0.5);
+        sleep(2000);
 
-        
+        turnFor(90, 0.5);
+        wristOut();
+        sleep(1000);
+        scoreMode();
+        sleep(1000);
+        turnFor(25, 0.5);
+        driveFor(26, 0.5);
+        sleep(2000);
+        intakePush();
+        sleep(2000);
+        driveFor(-30, 0.5);
     }
 }
+// The following below will be the code for an autonomous that grabs other samples and scores it
+
+// driveFor(inches: 4, speed: 0.5);
+//turnFor(angle: 45, speed: 0.5);
+//wristOut();
+//sleep(milliseconds: 1000);
+//collectMode();
+//intakePull();
+//sleep(milliseconds: 1000);
+//driveFor(inches: 9, speed: 0.5);
+//
