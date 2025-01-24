@@ -17,7 +17,7 @@ public class TeleOpModeClaw extends LinearOpMode {
     // values taken from sample code
     final int ARM_INITIAL       = 0;
     final int ARM_COLLECT       = (int) (250 * ARM_TPD);
-    final int ARM_CLEAR_BARRIER = (int) (230 * ARM_TPD);
+    final int ARM_CLEAR_BARRIER = (int) (225 * ARM_TPD);
     final int ARM_SCORE_SAMPLES = (int) (155 * ARM_TPD);
     final int ARM_STRAIGHT_UP   = (int) (120 * ARM_TPD);
     final int ARM_WINCH_ROBOT   = (int) (15 * ARM_TPD);
@@ -26,8 +26,8 @@ public class TeleOpModeClaw extends LinearOpMode {
     final double WRIST_FOLDED_IN  = 0.85;
     final double WRIST_FOLDED_OUT = 0.5;
 
-    final double CLAW_OPEN = 0.65;
-    final double CLAW_CLOSED = 0.95;
+    final double CLAW_OPEN = 0.68;
+    final double CLAW_CLOSED = 0.98;
 
     private DcMotor setupDriveMotor(String label, DcMotorSimple.Direction direction) {
         DcMotor driveMotor = hardwareMap.get(DcMotor.class, label);
