@@ -239,10 +239,33 @@ public class AutoOpModeClaw extends LinearOpMode {
         sleep(1000);
         driveFor(-5,0.5); //The robot reverses from its position
         homeMode();
-        turnFor(120,0.5);
+        /*turnFor(120,0.5);
         collectMode();
         sleep(1000);
+        openClaw(); */
+        //specimen
+        //turn left 45
+        //pick up arm
+        //move forward
+        //grab specimen
+        //180
+        //move forward and hang specimen
+        turnFor(135, 0.5);
+        sleep(1000);
+        driveFor(40, 0.5);
+        sleep(1000);
+        moveArm(180 * (int) ARM_TPD);
+        sleep(1000);
+        closeClaw();
+        sleep(1000);
+        moveArm(130 * (int) ARM_TPD);
+        sleep(1000);
+        //turnFor(180, 0.5);
+        driveFor(24, 0.5);
+        sleep(1000);
+        openClaw();
         homeMode();
+
     }
 }
 // The following below will be the code for an autonomous that grabs other samples and scores it
