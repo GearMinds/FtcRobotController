@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -11,12 +10,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
-import java.util.Random;
-
-@Autonomous(name="Autonomous Mode (Claw)", group="Robot")
-public class AutoOpModeClaw extends LinearOpMode {
+@Autonomous(name="Autonomous Mode (Park)", group="Robot")
+public class AutoOpModePark extends LinearOpMode {
 
     /*
     yellowjacket motor PPR = 1425.1 = CPR / 4
@@ -225,24 +221,12 @@ public class AutoOpModeClaw extends LinearOpMode {
         // turnFor(angle in degrees, speed)
         //  : turn at the specified angle
         closeClaw();
-        driveFor(8, 0.5);
-        sleep(1000);
-        turnFor(45, 0.5);
-        scoreMode(); //The robot has moved forward extended the arm to score and turned 45 degrees
-        sleep(1000);
         driveFor(8,0.5);
         sleep(1000);
-        turnFor(70, 0.5); //The robot lines up with the basket
+        turnFor(-90,0.5);
         sleep(1000);
-        driveFor(40, 0.5); //The robot drives forward to score
-        openClaw();
+        driveFor(-32, 0.5);
         sleep(1000);
-        driveFor(-5,0.5); //The robot reverses from its position
-        homeMode();
-        turnFor(120,0.5);
-        collectMode();
-        sleep(1000);
-        homeMode();
     }
 }
 // The following below will be the code for an autonomous that grabs other samples and scores it
