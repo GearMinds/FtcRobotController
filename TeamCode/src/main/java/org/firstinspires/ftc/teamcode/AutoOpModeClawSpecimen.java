@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@Autonomous(name="Autonomous Mode (Park)", group="Robot")
-public class AutoOpModePark extends LinearOpMode {
+@Autonomous(name="Autonomous Mode Pecimen (Claw)", group="Robot")
+public class AutoOpModeClawSpecimen extends LinearOpMode {
 
     /*
     yellowjacket motor PPR = 1425.1 = CPR / 4
@@ -221,12 +221,46 @@ public class AutoOpModePark extends LinearOpMode {
         // turnFor(angle in degrees, speed)
         //  : turn at the specified angle
         closeClaw();
-        driveFor(8,0.5);
+        driveFor(-8, 0.5);
+        sleep(500);
+        turnFor(-45, 0.5);
+        scoreMode(); //The robot has moved forward extended the arm to score and turned 45 degrees
+        sleep(500);
+        driveFor(-8,0.5);
+        sleep(500);
+        turnFor(-70, 0.5); //The robot lines up with the basket
+        sleep(500);
+        driveFor(-40, 0.5); //The robot drives forward to score
+        openClaw();
+        sleep(500);
+        driveFor(5,0.5); //The robot reverses from its position
+        homeMode();
+        /*turnFor(120,0.5);
+        collectMode();
         sleep(1000);
-        turnFor(-90,0.5);
+        openClaw(); */
+        //specimen
+        //turn left 45
+        //pick up arm
+        //move forward
+        //grab specimen
+        //180
+        //move forward and hang specimen
+        turnFor(135, 0.5);
         sleep(1000);
-        driveFor(32, 0.5);
+        driveFor(40, 0.5);
         sleep(1000);
+        moveArm(180 * (int) ARM_TPD);
+        sleep(1000);
+        closeClaw();
+        sleep(1000);
+        moveArm(130 * (int) ARM_TPD);
+        sleep(1000);
+        //turnFor(180, 0.5);
+        driveFor(24, 0.5);
+        sleep(1000);
+        openClaw();
+        homeMode();
     }
 }
 // The following below will be the code for an autonomous that grabs other samples and scores it
