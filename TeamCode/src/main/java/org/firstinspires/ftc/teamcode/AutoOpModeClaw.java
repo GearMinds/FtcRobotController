@@ -225,20 +225,48 @@ public class AutoOpModeClaw extends LinearOpMode {
         // turnFor(angle in degrees, speed)
         //  : turn at the specified angle
         closeClaw();
-        driveFor(8, 0.5);
-        sleep(1000);
-        turnFor(45, 0.5);
-        scoreMode(); //The robot has moved forward extended the arm to score and turned 45 degrees
-        sleep(1000);
-        driveFor(8,0.5);
-        sleep(1000);
-        turnFor(70, 0.5); //The robot lines up with the basket
-        sleep(1000);
-        driveFor(40, 0.5); //The robot drives forward to score
+        driveFor(-13, 0.5);
+        sleep(250);
+        turnFor(-135, 0.5);
+        scoreMode();
+        //The robot has moved forward extended the arm to score and turned 45 degrees
+
+        sleep(250);
+        driveFor(10,0.5);
+        sleep(250);
+        turnFor(70, 0.5);
+        //The robot lines up with the basket
+
+        sleep(250);
+        driveFor(37, 0.5);
+        //The robot drives forward to score
+
         openClaw();
         sleep(1000);
-        driveFor(-5,0.5); //The robot reverses from its position
+        driveFor(-15,0.5);
+        sleep(250);
+        //The robot reverses from its position
+        turnFor(-99,0.5);
+
+        //Robot moves to pick up second sample
+        sleep(250);
+        driveFor(16,0.5);
+        sleep(1000);
+        moveArm(268 * (int) ARM_TPD);
+        sleep(1000);
+        closeClaw();
+        sleep(500);
+
+        //Robot lines up to score second sample
+        scoreMode();
+        turnFor(120,0.5);
+        sleep(250);
+        driveFor(23,0.5);
+        sleep(1000);
+        openClaw();
+        sleep(1000);
         homeMode();
+
         /*turnFor(120,0.5);
         collectMode();
         sleep(1000);
@@ -246,11 +274,8 @@ public class AutoOpModeClaw extends LinearOpMode {
         //specimen
         //turn left 45
         //pick up arm
-        //move forward
-        //grab specimen
-        //180
-        //move forward and hang specimen
-        turnFor(135, 0.5);
+
+        /*turnFor(135, 0.5);
         sleep(1000);
         driveFor(40, 0.5);
         sleep(1000);
@@ -264,7 +289,7 @@ public class AutoOpModeClaw extends LinearOpMode {
         driveFor(24, 0.5);
         sleep(1000);
         openClaw();
-        homeMode();
+        homeMode();*/
 
     }
 }
