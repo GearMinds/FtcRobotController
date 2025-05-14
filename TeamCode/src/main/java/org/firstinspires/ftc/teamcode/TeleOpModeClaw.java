@@ -63,8 +63,6 @@ public class TeleOpModeClaw extends LinearOpMode {
         Servo claw = setupClawServo("claw");
 
         boolean slideExtended = false;
-
-        int slidePositiion = 0;
         int armPosition = ARM_INITIAL;
 
         telemetry.addLine("Waiting for robot to start...");
