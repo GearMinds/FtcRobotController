@@ -83,8 +83,8 @@ public class TeleOpModeClaw extends LinearOpMode {
                 r /= overflow;
             }
 
-            lDrive.setPower(l / 1.5);
-            rDrive.setPower(r / 1.5);
+            lDrive.setPower(l);
+            rDrive.setPower(r);
 
             if (gamepad1.right_trigger > 0.5) {
                 armPosition += 1;
@@ -123,16 +123,18 @@ public class TeleOpModeClaw extends LinearOpMode {
             if (gamepad1.dpad_down) // D-Down -> winch robot upwards
                 armPosition = ARM_WINCH_ROBOT;
             if (gamepad1.dpad_left) // D-Left -> Reset arm to original position
-                armPosition = ARM_INITIAL;
+                armPosition = ARM_INITIAL + 75;
             if (gamepad1.dpad_right) // D-Right -> Set arm to specimen score configuration
                 armPosition = ARM_SCORE_SAMPLES;
+
+            int slidePosition = armPosition > (ARM_SCORE_SAMPLES + 5) ? -900 : -1700;
 
             // set target position
             arm.setTargetPosition(armPosition);
             arm.setPower(1.0); // go at full power!
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            slide.setTargetPosition(slideExtended ? -1650 : 0);
+            slide.setTargetPosition(slideExtended ? slidePosition : 0);
             slide.setPower(1.0);
             slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -155,7 +157,8 @@ public class TeleOpModeClaw extends LinearOpMode {
             telemetry.addLine();
             telemetry.addData("Right Motor", rDrive.getPower());
             telemetry.addData(" Left Motor", lDrive.getPower());
-            telemetry.addData("Slide Motor", slideExtended ? "extended" : "retracted");
+            telemetry.addData("   Extended", slideExtended ? "extended" : "retracted");
+            telemetry.addData("      Slide", slidePosition);
             telemetry.addData("        Arm", armPosition);
             telemetry.update();
         }

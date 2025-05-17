@@ -39,8 +39,8 @@ public class AutoOpModeClaw extends LinearOpMode {
     final double WRIST_FOLDED_IN  = 0.85;
     final double WRIST_FOLDED_OUT = 0.5;
 
-    DcMotor lDrive, rDrive, arm;
-    Servo wrist, claw;
+    DcMotor lDrive, rDrive, arm, slide;
+    Servo claw;
     IMU imu;
 
     private DcMotor setupDriveMotor(String label, DcMotorSimple.Direction direction) {
@@ -154,24 +154,27 @@ public class AutoOpModeClaw extends LinearOpMode {
         claw.setPosition(CLAW_CLOSED);
     }
 
-    private void wristOut() {
-        wrist.setPosition(WRIST_FOLDED_OUT);
-    }
-
-    private void wristIn() {
-        wrist.setPosition(WRIST_FOLDED_IN);
-    }
-
     private void moveArm(int position) {
         arm.setTargetPosition(position);
         arm.setPower(1.0);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
+    private void extendSlide() {
+        slide.setTargetPosition((arm.getCurrentPosition() > ARM_SCORE_SAMPLES) ? 900 : -1700);
+        slide.setPower(1.0);
+        slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    private void retractSlide() {
+        slide.setTargetPosition(0);
+        slide.setPower(1.0);
+        slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
     private void collectMode() {
         moveArm(ARM_COLLECT);
         openClaw();
-        wristOut();
         sleep(2000);
     }
 
@@ -183,16 +186,15 @@ public class AutoOpModeClaw extends LinearOpMode {
     private void homeMode() {
         moveArm(ARM_INITIAL);
         closeClaw();
-        wristIn();
         sleep(2000);
     }
 
     private void setupDevices() {
         lDrive = setupDriveMotor("l_drive", DcMotorSimple.Direction.REVERSE);
         rDrive = setupDriveMotor("r_drive", DcMotorSimple.Direction.FORWARD);
-        wrist = setupWristServo("wrist");
         claw = setupClawServo("claw");
         arm = setupDriveMotor("arm", DcMotorSimple.Direction.FORWARD);
+        slide = setupDriveMotor("slide", DcMotorSimple.Direction.FORWARD);
         imu = setupIMU("imu");
     }
 
@@ -201,7 +203,6 @@ public class AutoOpModeClaw extends LinearOpMode {
         setupDevices(); // connect devices to their respective global objects
 
         closeClaw(); // make sure the intake is not running at startup
-        wristIn(); // make sure the wrist is folded in
         // the arm should already be the in the correct position
 
         waitForStart();
@@ -216,14 +217,17 @@ public class AutoOpModeClaw extends LinearOpMode {
         //  : complete to move onto the next line of code
         // closeClaw(), openClaw()
         //  : open or close the claw
-        // wristIn(), wristOut()
-        //  : fold the wrist in or out
+        // extendSlide(), retractSlide()
+        //  : extend or retract the slide
 
         // drive:
         // driveFor(distance in inches, speed)
         //  : move in a straight line
         // turnFor(angle in degrees, speed)
         //  : turn at the specified angle
+
+        moveArm(ARM_INITIAL + 5);
+
         closeClaw();
         driveFor(-13, 0.5);
         sleep(250);
@@ -232,25 +236,35 @@ public class AutoOpModeClaw extends LinearOpMode {
         //The robot has moved forward extended the arm to score and turned 45 degrees
 
         sleep(250);
+        moveArm(140 * (int) ARM_TPD);
+        sleep(250);
+        extendSlide();
+        sleep(1000);
         driveFor(10,0.5);
         sleep(250);
         turnFor(70, 0.5);
         //The robot lines up with the basket
 
         sleep(250);
+        extendSlide();
+        //sleep(250);
+        sleep(250);
         driveFor(37, 0.5);
+
         //The robot drives forward to score
 
         openClaw();
         sleep(1000);
+        retractSlide();
+        sleep(250);
         driveFor(-15,0.5);
         sleep(250);
         //The robot reverses from its position
-        turnFor(-99,0.5);
+        turnFor(-115,0.5);
 
         //Robot moves to pick up second sample
         sleep(250);
-        driveFor(16,0.5);
+        driveFor(14,0.5);
         sleep(1000);
         moveArm(268 * (int) ARM_TPD);
         sleep(1000);
@@ -259,45 +273,18 @@ public class AutoOpModeClaw extends LinearOpMode {
 
         //Robot lines up to score second sample
         scoreMode();
-        turnFor(120,0.5);
+        turnFor(130,0.5);
         sleep(250);
-        driveFor(23,0.5);
+        moveArm(140 * (int) ARM_TPD);
+        sleep(250);
+        extendSlide();
         sleep(1000);
+        driveFor(23,0.5);
+        sleep(250);
         openClaw();
+        sleep(250);
+        retractSlide();
         sleep(1000);
         homeMode();
-
-        /*turnFor(120,0.5);
-        collectMode();
-        sleep(1000);
-        openClaw(); */
-        //specimen
-        //turn left 45
-        //pick up arm
-
-        /*turnFor(135, 0.5);
-        sleep(1000);
-        driveFor(40, 0.5);
-        sleep(1000);
-        moveArm(180 * (int) ARM_TPD);
-        sleep(1000);
-        closeClaw();
-        sleep(1000);
-        moveArm(130 * (int) ARM_TPD);
-        sleep(1000);
-        //turnFor(180, 0.5);
-        driveFor(24, 0.5);
-        sleep(1000);
-        openClaw();
-        homeMode();*/
-
     }
 }
-// The following below will be the code for an autonomous that grabs other samples and scores it
-
-// driveFor(inches: 4, speed: 0.5);
-//turnFor(angle: 45, speed: 0.5);
-//sleep(milliseconds: 1000);
-// driveFor(inches: 9, speed: 0.5);
-//sleep(milliseconds: 1000);
-//
