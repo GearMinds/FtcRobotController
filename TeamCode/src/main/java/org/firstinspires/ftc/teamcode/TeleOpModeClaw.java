@@ -63,6 +63,8 @@ public class TeleOpModeClaw extends LinearOpMode {
         Servo claw = setupClawServo("claw");
 
         boolean slideExtended = false;
+        boolean xButtonPressed = false;
+
         int armPosition = ARM_INITIAL;
 
         telemetry.addLine("Waiting for robot to start...");
@@ -97,8 +99,14 @@ public class TeleOpModeClaw extends LinearOpMode {
                 claw.setPosition(CLAW_OPEN);
 
             // extend or retract the slide
-            if (gamepad1.x)
-                slideExtended = !slideExtended;
+            if (gamepad1.x) {
+                if (!xButtonPressed) {
+                    slideExtended = !slideExtended;
+                }
+                xButtonPressed = true;
+            } else {
+                xButtonPressed = false;
+            }
 
             // arm position mappings
             if (gamepad1.y) // Y -> Move arm to score in the basket
