@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -22,6 +21,7 @@ public class TeleOpModeClaw extends LinearOpMode {
     final int ARM_STRAIGHT_UP   = (int) (120 * ARM_TPD);
     final int ARM_WINCH_ROBOT   = (int) (15 * ARM_TPD);
 
+    final float HELLO_WORLD = 0.234f;
 
     final double CLAW_OPEN = 0.68;
     final double CLAW_CLOSED = 0.98;
