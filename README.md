@@ -1602,7 +1602,3 @@ Changes include:
  * The hardware loop has been updated for better performance.
 
 Parker was here
-
-
-
-Adhav was here
