@@ -5,14 +5,16 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.teamcode.lib.DriveTrain;
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Tele Op", group="Robot")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Base Tele Op", group="Robot")
 public class BaseTeleOp extends Robot {
-    DriveTrain drive = new DriveTrain();
+    DriveTrain drive;
 
     @Override
     public void setup() {
+        drive = new DriveTrain(hardwareMap);
+
         // Might need to change the motor direction depending on how it's wired up
-        this.drive.setLeftDirection(DcMotorSimple.Direction.FORWARD);
+        this.drive.setRightDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     @Override
@@ -26,7 +28,11 @@ public class BaseTeleOp extends Robot {
             rightPower /= overflow;
         }
 
-        drive.setLeftPower(leftPower);
-        drive.setRightPower(rightPower);
+        this.drive.setLeftPower(leftPower / 2);
+        this.drive.setRightPower(rightPower / 2);
+
+        telemetry.addData("delta: ", delta);
+        telemetry.addLine("hello world");
+        telemetry.update();
     }
 }

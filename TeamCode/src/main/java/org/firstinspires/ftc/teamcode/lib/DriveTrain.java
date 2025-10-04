@@ -1,20 +1,20 @@
 package org.firstinspires.ftc.teamcode.lib;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class DriveTrain {
 
-    private DcMotor[] motors = new DcMotor[2];
+    private final DcMotor[] motors = new DcMotor[2];
     // index 0: left motor
     // index 1: right motor
 
-    public DriveTrain() {
-        this("left_drive_motor", "right_drive_motor");
+    public DriveTrain(HardwareMap hardwareMap) {
+        this(hardwareMap, "left_drive_motor", "right_drive_motor");
     }
 
-    public DriveTrain(String leftMotorLabel, String rightMotorLabel) {
+    public DriveTrain(HardwareMap hardwareMap, String leftMotorLabel, String rightMotorLabel) {
         this.motors[0] = hardwareMap.get(DcMotor.class, leftMotorLabel);
         this.motors[1] = hardwareMap.get(DcMotor.class, rightMotorLabel);
 

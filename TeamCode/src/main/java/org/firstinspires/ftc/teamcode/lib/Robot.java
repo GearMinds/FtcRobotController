@@ -15,7 +15,8 @@ public abstract class Robot extends LinearOpMode {
 
         double delta = System.currentTimeMillis();
         while (opModeIsActive()) {
-            this.cycle(System.currentTimeMillis() - delta);
+            delta = System.currentTimeMillis() - delta;
+            this.cycle(delta);
         }
     }
 }
