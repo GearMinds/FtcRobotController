@@ -2,16 +2,17 @@ package org.firstinspires.ftc.teamcode.lib;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class OmniDriveTrain {
 
-    private DcMotor frontLeft, frontRight, backLeft, backRight;
+    public DcMotor frontLeft, frontRight, backLeft, backRight;
 
-    public OmniDriveTrain() {
-        this("fl", "fr", "bl", "br");
+    public OmniDriveTrain(HardwareMap hardwareMap) {
+        this(hardwareMap, "fl", "fr", "bl", "br");
     }
 
-    public OmniDriveTrain(String frontLeftLabel, String frontRightLabel, String backLeftLabel, String backRightLabel) {
+    public OmniDriveTrain(HardwareMap hardwareMap, String frontLeftLabel, String frontRightLabel, String backLeftLabel, String backRightLabel) {
         this.frontLeft = hardwareMap.get(DcMotor.class, frontLeftLabel);
         this.frontRight = hardwareMap.get(DcMotor.class, frontRightLabel);
         this.backLeft = hardwareMap.get(DcMotor.class, backLeftLabel);
