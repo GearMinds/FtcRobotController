@@ -11,16 +11,13 @@ Note for Windows users: If your terminal says that the command is not found, you
 ```
 C:\Users\$env:username\AppData\Local\Android\Sdk\platform-tools\adb.exe connect 192.168.43.1
 ```
-## API
-Documentation for tele-op and autonomous interfaces
+You should see the robot appear as the device in android studio. Build and upload your code by clicking the play button.
 
-### Classes
-- `Robot`
-- `Launcher`
-- `DriveTrain`
+## Quickstart Guide
+Get started writing code for the robot by following the guide below. For a more detailed list of
+methods, [go to the API documentation](#api).
 
 ### Robot
-
 The `Robot` class is used as the main entry point for tele-op and autonomous programs. To create a new robot program, start by creating a new Java class and extending it with `Robot` like so:
 ```java
 package org.firstinspires.ftc.teamcode;
@@ -31,13 +28,9 @@ public class MyRobotProgram extends Robot {}
 #### Autonomous
 Your new program will either be `TeleOp` or `Autonomous`. For this example we will create an `Autonomous` program. Add the following to the top of your class:
 ```java
-package org.firstinspires.ftc.teamcode;
-import org.firstinspires.ftc.teamcode.lib.Robot;
-
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="MyAutonomous", group="Robot")
-public class MyRobotProgram extends Robot {}
 ```
-This class requires that we define a method called `setup`. This method is responsible for initializing our drive train, launcher, and other peripherals needed. ABSOLUTELY NO LOGIC SHOULD GO HERE, THE ROBOT WILL NOT RESPOND TO IT, AND YOU WILL PROBABLY THROW AN EXCEPTION. This is the minimum amount of required code to initialize the entire robot:
+This abstract class requires that we define a method called `setup`. This method is responsible for initializing our drive train, launcher, and other peripherals needed. ABSOLUTELY NO LOGIC SHOULD GO HERE, THE ROBOT WILL NOT RESPOND TO IT, AND YOU WILL PROBABLY THROW AN EXCEPTION. This is the minimum amount of required code to initialize the entire robot:
 
 ```java
 package org.firstinspires.ftc.teamcode;
@@ -114,27 +107,7 @@ If `run` is defined, cycle WILL NOT run unless the member variable `cycleShouldR
 #### TeleOp
 For tele-op, nothing changes except for the annotation at the top of the class. In tele-op mode, all of the same methods are available to you.
 ```java
-package org.firstinspires.ftc.teamcode;
-import org.firstinspires.ftc.teamcode.lib.DriveTrain;
-import org.firstinspires.ftc.teamcode.lib.Launcher;
-import org.firstinspires.ftc.teamcode.lib.Robot;
-
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="MyTeleOp", group="Robot")
-public class MyRobotProgram extends Robot {
-    DriveTrain driveTrain;
-    Launcher launcher;
-
-    @Override
-    public void setup() throws InterruptedException {
-        driveTrain = new DriveTrain(this);
-        launcher = new Launcher(hardwareMap);
-    }
-
-    @Override
-    public void cycle(double delta) throws InterruptedException {
-        // These instructions loop until the program ends
-    }
-}
 ```
 The tele-op code for this year is already defined under `TeleOp.java`. If you have changes to make, _please_ make them there. No one should be creating a new TeleOp program in 2025/2026.
 
@@ -143,8 +116,8 @@ The drive train class is an easy way to interface with the motors that drive the
 ```java
 @Override
 public void run() throws InterruptedException {
-    driveTrain.moveForwardFor(12.0);
-    driveTrain.moveBackwardFor(6.0);
+    driveTrain.forwardFor(12.0);
+    driveTrain.backwardFor(6.0);
 }
 ```
 We can also strafe left and right. This block of code will strafe the robot 1 foot to the left and back.
@@ -159,16 +132,24 @@ You can also rotate the robot. Only the right direction works at the moment. Thi
 ```java
 @Override
 public void run() throws InterruptedException {
-    driveTrain.turnfor(90);
+    driveTrain.rotateFor(90);
 }
 ```
-#### Coaches:
-- Parker
-- Binod
-#### Members:
-- Adhav
-- Alexander
-- Dylan
-- Sruti
-- Suhruth
-- Vidyuth
+### Launcher
+The launcher is controlled by a `Launcher` object. Like the `driveTrain` variable, we will use the already defined `launcher` as an example here.
+```java
+
+```
+
+## API
+- `DriveTrain`
+  - `setSpeed`: Set the speed of the motors for autonomous motion. Accepts a `double` argument between `-1.0` and `1.0` for the speed.
+```java
+setSpeed(0.5); // Set the robot to half speed
+```
+  - `forward`: Start the drive motors in the forward direction.
+```java
+forward(); // Start dirving the robot forward
+```
+  - `reverse`: Start the drive motors in the reverse direction.
+- `Launcher`

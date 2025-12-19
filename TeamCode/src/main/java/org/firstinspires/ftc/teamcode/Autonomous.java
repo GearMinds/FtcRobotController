@@ -22,12 +22,12 @@ public class Autonomous extends Robot {
         driveTrain.setSpeed(0.25);
 
         // Start program
-        driveTrain.driveForwardFor(12);
+        driveTrain.forwardFor(12);
         driveTrain.strafeRightFor(12);
         driveTrain.strafeLeftFor(12);
-        driveTrain.driveBackwardFor(12);
+        driveTrain.reverseFor(12);
 
-        driveTrain.turnFor(90);
-        driveTrain.turnFor(-180);
+        driveTrain.rotateFor(90);
+        driveTrain.rotateFor(-180);
     }
 }

@@ -13,7 +13,6 @@ public class DriveTrain {
 
     public DcMotor frontLeft, frontRight, backLeft, backRight;
     public double maxPower = 1.0;
-
     private double speed = 1.0;
     private double gain = 0.01;
 
@@ -35,7 +34,7 @@ public class DriveTrain {
         return driveMotor;
     }
 
-    public IMU setupIMU(HardwareMap hardwareMap, String label) {
+    private IMU setupIMU(HardwareMap hardwareMap, String label) {
         IMU imu = hardwareMap.get(IMU.class, label);
 
         RevHubOrientationOnRobot orientation = new RevHubOrientationOnRobot(
@@ -94,6 +93,13 @@ public class DriveTrain {
         this.robot = robot;
     }
 
+    public void setPower(double leftFrontPower, double leftBackPower, double rightFrontPower, double rightBackPower) {
+        this.frontLeft.setPower(leftFrontPower * maxPower);
+        this.backLeft.setPower(leftBackPower * maxPower);
+        this.frontRight.setPower(rightFrontPower * maxPower);
+        this.backRight.setPower(rightBackPower * maxPower);
+    }
+
     public void setSpeed(double speed) {
         if (speed > 1.0) {
             speed = 1.0;
@@ -103,7 +109,35 @@ public class DriveTrain {
         this.speed = speed;
     }
 
-    public void driveForwardFor(double inches) {
+    public void forward() {
+        setPower(speed, speed, speed, speed);
+    }
+
+    public void reverse() {
+        setPower(-speed, -speed, -speed, -speed);
+    }
+
+    public void rotateLeft() {
+        setPower(-speed, -speed, speed, speed);
+    }
+
+    public void rotateRight() {
+        setPower(speed, speed, -speed, -speed);
+    }
+
+    public void strafeLeft() {
+        setPower(speed, -speed, -speed, speed);
+    }
+
+    public void strafeRight() {
+        setPower(-speed, speed, speed, -speed);
+    }
+
+    public void stop() {
+        setPower(0.0, 0.0, 0.0, 0.0);
+    }
+
+    public void forwardFor(double inches) {
         if (robot.opModeIsActive()) {
 
             setDriveMotorsTargetPosition(inches);
@@ -117,8 +151,8 @@ public class DriveTrain {
         }
     }
 
-    public void driveBackwardFor(double inches) {
-        driveForwardFor(-inches);
+    public void reverseFor(double inches) {
+        forwardFor(-inches);
     }
 
     public void strafeRightFor(double inches) {
@@ -143,8 +177,8 @@ public class DriveTrain {
         strafeRightFor(-inches);
     }
 
-    public void turnFor(double angle) {
-        double power, error = angle - getHeading();
+    public void rotateFor(double angle) {
+        double power, error = angle + getHeading();
 
         while (robot.opModeIsActive() && Math.abs(error) > 1.0) {
             error = angle + getHeading();
@@ -162,24 +196,5 @@ public class DriveTrain {
 
         setDriveMotorsPower(0);
         imu.resetYaw();
-    }
-
-    public void setPower(double leftFrontPower, double leftBackPower, double rightFrontPower, double rightBackPower) {
-        this.frontLeft.setPower(leftFrontPower * maxPower);
-        this.backLeft.setPower(leftBackPower * maxPower);
-        this.frontRight.setPower(rightFrontPower * maxPower);
-        this.backRight.setPower(rightBackPower * maxPower);
-    }
-
-    public void driveForward(double speed) {
-        setPower(speed, speed, speed, speed);
-    }
-
-    public void driveBackward(double speed) {
-        setPower(speed, speed, speed, speed);
-    }
-
-    public void stop() {
-        setPower(0.0, 0.0, 0.0, 0.0);
     }
 }
