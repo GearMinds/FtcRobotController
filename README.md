@@ -1,5 +1,5 @@
 # Team 26644 FTC Robot Controller Code
-[Documentation](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/readme.md)
+[Documentation](TeamCode/src/main/java/org/firstinspires/ftc/teamcode/README.md)
 ### Coaches:
 - Parker
 - Binod
