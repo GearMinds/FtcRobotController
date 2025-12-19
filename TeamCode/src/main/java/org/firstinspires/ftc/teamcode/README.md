@@ -142,8 +142,9 @@ The launcher is controlled by a `Launcher` object. Like the `driveTrain` variabl
 ```
 
 ## API
-- `DriveTrain`
-  - `setSpeed`: Set the speed of the motors for autonomous motion. Accepts a `double` argument between `-1.0` and `1.0` for the speed.
+### DriveTrain
+#### `setSpeed`
+Set the speed of the motors for autonomous motion. Accepts a `double` argument between `-1.0` and `1.0` for the speed.
 ```java
 setSpeed(0.5); // Set the robot to half speed
 ```
