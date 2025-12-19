@@ -77,31 +77,15 @@ public class MyRobotProgram extends Robot {
 Optionally, you can define a `cycle` method to have code run as a cycle in a while loop. No need to
 handle the program exiting gracefully.
 ```java
-package org.firstinspires.ftc.teamcode;
-import org.firstinspires.ftc.teamcode.lib.DriveTrain;
-import org.firstinspires.ftc.teamcode.lib.Launcher;
-import org.firstinspires.ftc.teamcode.lib.Robot;
-
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="MyAutonomous", group="Robot")
-public class MyRobotProgram extends Robot {
-    DriveTrain driveTrain;
-    Launcher launcher;
-
-    @Override
-    public void setup() throws InterruptedException {
-        driveTrain = new DriveTrain(this);
-        launcher = new Launcher(hardwareMap);
-    }
-
-    @Override
-    public void cycle(double delta) throws InterruptedException {
-        // These instructions loop until the program ends
-        
-        // the `delta` variable represents how much time has passed since the last cycle.
-        // This can be useful for some algorithms.
-    }
+@Override
+public void cycle(double delta) throws InterruptedException {
+    // These instructions loop until the program ends
+    
+    // the `delta` variable represents how much time has passed since the last cycle.
+    // This can be useful for some algorithms.
 }
 ```
+#### Important note about how `run` and `cycle` interact
 If `run` is defined, cycle WILL NOT run unless the member variable `cycleShouldRun` is set to `true`. If `cycleShouldRun` is set to `true` when `run` is also defined, `cycle` will start cycling after `run`
 
 #### TeleOp
@@ -117,7 +101,7 @@ The drive train class is an easy way to interface with the motors that drive the
 @Override
 public void run() throws InterruptedException {
     driveTrain.forwardFor(12.0);
-    driveTrain.backwardFor(6.0);
+    driveTrain.reverseFor(6.0);
 }
 ```
 We can also strafe left and right. This block of code will strafe the robot 1 foot to the left and back.
@@ -138,19 +122,99 @@ public void run() throws InterruptedException {
 ### Launcher
 The launcher is controlled by a `Launcher` object. Like the `driveTrain` variable, we will use the already defined `launcher` as an example here.
 ```java
+@Override
+public void run() throws InterruptedException {
+    launcher.spinFlywheel();
 
+    sleep(5000); // wait for 5000 ms before executing the next instruction 
+
+    launcher.feed();
+
+    sleep(5000);
+
+    launcher.stop();
+}
 ```
+In this example we start off by starting up the flywheel. The flywheel takes a little bit of time to get up to full speed, so we can instruct the robot to wait for a specified number of milliseconds. For this we are waiting 5 seconds before turning on the feeder motors. Once the feeder is feeding, we wait an additional 5 seconds to allow the robot time to launch the ball(s). After that we need to kill the motors with the `stop` method.
 
 ## API
-### DriveTrain
-#### `setSpeed`
-Set the speed of the motors for autonomous motion. Accepts a `double` argument between `-1.0` and `1.0` for the speed.
+### DriveTrain API
+`setPower(double leftFrontPower, double leftBackPower, double rightFrontPower, double rightBackPower)`
+- Directly control the power of the motors all at once. The actual power output depends on the public member variable `maxPower`.
+
+`setSpeed(double speed)`
+- Set the speed of the motors for autonomous motion. Accepts a `double` argument between `0.0` and `1.0` for the speed.
 ```java
-setSpeed(0.5); // Set the robot to half speed
+driveTrain.setSpeed(0.5); // Set the robot to half speed
 ```
-  - `forward`: Start the drive motors in the forward direction.
+`forward()`
+- Start the drive motors in the forward direction. 
+
+`forwardFor(double inches)`
+- Drive the robot forward for the specified amount of inches. Accepts a `double` argument for the number of inches.
 ```java
-forward(); // Start dirving the robot forward
+driveTrain.forwardFor(12.0); // Drive the robot forward for 1 foot.
 ```
-  - `reverse`: Start the drive motors in the reverse direction.
-- `Launcher`
+`reverse()`
+- Start the drive motors in the reverse direction. 
+
+`reverseFor(double inches)`
+- Drive the robot in the reverse direction for the specified amount of inches. Accepts a `double` argument for the number of inches.
+```java
+driveTrain.reverseFor(12.5); // Drive the robot backward for 1 foot and 1/2 inch.
+```
+
+`strafeLeft()`
+- Start the motors to make the robot strafe to the left. 
+
+`strafeLeftFor(double inches)`
+- Make the robot strafe to the left for the specified amount of inches. Accepts a `double` argument for the number of inches.
+```java
+driveTrain.strafeLeftFor(6.5); // Have the robot strafe left for 6 1/2 inches.
+```
+
+`strafeRight()`
+- Start the motors to make the robot strafe to the right. 
+
+`strafeRightFor(double inches)`
+- Make the robot strafe to the right for the specified amount of inches. Accepts a `double` argument for the number of inches.
+```java
+driveTrain.strafeRightFor(3); // Have the robot strafe right for 3 inches.
+```
+
+`rotateLeft()`
+- Start rotating the robot to the left. 
+
+`rotateRight()`
+- Start rotating the robot to the right. 
+
+`rotateFor`
+- Start rotating to the right for the specified number of degrees. Accepts a `double` argument for the number of degrees.
+```java
+driveTrain.rotateFor(90); // Turn the robot at a right angle
+```
+`stop()`
+- Stop all drive train motion.
+### Launcher API
+`feed()`
+- Start feeding balls into the flywheel area.
+
+`backFeed()`
+- Reverse feed balls out from the flywheel area.
+
+`stopFeeder()`
+- Stop the feeder motor.
+
+`spinFlywheel()`
+- Start the flywheel motor.
+
+`stopFlywheel()`
+- Stop the flywheel motor.
+
+`toggleFlywheel()`
+- If the flywheel is off it will turn on and vice versa.
+
+`stop()`
+- Stops the flywheel and the feeder motors.
+
+
