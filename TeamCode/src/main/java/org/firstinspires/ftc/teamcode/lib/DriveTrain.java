@@ -78,8 +78,8 @@ public class DriveTrain {
     }
 
     private double getCorrectionPower(double error) {
-        while (error > 180) error -= 360;
-        while (error <= -180) error += 360;
+        while (error > 360) error -= 180;
+        while (error < -360) error += 180;
 
         return Range.clip(Range.clip(error * gain, -1.0, 1.0), -speed, speed);
     }
@@ -126,11 +126,11 @@ public class DriveTrain {
     }
 
     public void strafeLeft() {
-        setPower(speed, -speed, -speed, speed);
+        setPower(-speed, speed, speed, -speed);
     }
 
     public void strafeRight() {
-        setPower(-speed, speed, speed, -speed);
+        setPower(speed, -speed, -speed, speed);
     }
 
     public void stop() {
@@ -177,16 +177,12 @@ public class DriveTrain {
         strafeRightFor(-inches);
     }
 
-    public void rotateFor(double angle) {
+    public void rotateRightFor(double angle) {
         double power, error = angle + getHeading();
 
         while (robot.opModeIsActive() && Math.abs(error) > 1.0) {
             error = angle + getHeading();
             power = getCorrectionPower(error);
-
-            robot.telemetry.addData("error: ", error);
-            robot.telemetry.addData("power: ", power);
-            robot.telemetry.update();
 
             frontLeft.setPower(power);
             backLeft.setPower(power);
@@ -196,5 +192,9 @@ public class DriveTrain {
 
         setDriveMotorsPower(0);
         imu.resetYaw();
+    }
+
+    public void rotateLeftFor(double angle) {
+        rotateRightFor(-angle);
     }
 }

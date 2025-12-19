@@ -30,7 +30,7 @@ public class Launcher {
         rightFeeder.setPower(-1.0);
     }
 
-    public void unfeed() {
+    public void backFeed() {
         leftFeeder.setPower(-1.0);
         rightFeeder.setPower(1.0);
     }
@@ -57,5 +57,10 @@ public class Launcher {
         } else {
             stopFlywheel();
         }
+    }
+
+    public void stop() {
+        stopFlywheel();
+        stopFeeder();
     }
 }

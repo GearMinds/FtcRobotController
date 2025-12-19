@@ -19,15 +19,7 @@ public class Autonomous extends Robot {
 
     @Override
     public void run() throws InterruptedException {
-        driveTrain.setSpeed(0.25);
-
-        // Start program
-        driveTrain.forwardFor(12);
-        driveTrain.strafeRightFor(12);
-        driveTrain.strafeLeftFor(12);
-        driveTrain.reverseFor(12);
-
-        driveTrain.rotateFor(90);
-        driveTrain.rotateFor(-180);
+        // Main autonomous code goes here...
+        // See README.md for API documentation
     }
 }

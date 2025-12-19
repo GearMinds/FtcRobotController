@@ -41,7 +41,7 @@ public class TeleOp extends Robot {
             launcher.feed();
         } else if (gamepad1.x) {
             // Holding X will reverse balls out of the feeder if desired
-            launcher.unfeed();
+            launcher.backFeed();
         } else {
             launcher.stopFeeder();
         }
