@@ -1,22 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.teamcode.lib.DriveTrain;
 import org.firstinspires.ftc.teamcode.lib.Launcher;
-import org.firstinspires.ftc.teamcode.lib.OmniDriveTrain;
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Tele Op", group="Robot")
 public class TeleOp extends Robot {
-    OmniDriveTrain driveTrain;
+    DriveTrain driveTrain;
     Launcher launcher;
 
     @Override
-    public void setup() {
-        driveTrain = new OmniDriveTrain(hardwareMap);
+    public void setup() throws InterruptedException {
+        driveTrain = new DriveTrain(this);
         launcher = new Launcher(hardwareMap);
     }
 
     @Override
-    public void cycle(double delta) {
+    public void cycle(double delta) throws InterruptedException {
 
         // Get the desired direction from the control sticks
         double translateX = -gamepad1.left_stick_y;
@@ -46,36 +46,35 @@ public class TeleOp extends Robot {
             launcher.stopFeeder();
         }
 
-        // Soft holding the left trigger will slow the robot down 1/2
-        // Hard holding the left trigger will slow the robot down 1/3
-        if (gamepad1.left_trigger > 0.0) {
-            driveTrain.maxPower = gamepad1.left_trigger;
-        } else {
-            // Not holding the trigger will set it back to 100%
-            driveTrain.maxPower = 1.0;
-        }
+        // Apply breaking
+        driveTrain.maxPower = 1.0 - gamepad1.left_trigger;
 
         // Set the drive train power
         driveTrain.setPower(leftFrontPower, leftBackPower, rightFrontPower, rightBackPower);
 
+        // Send data to the driver station on each cycle
         telemetry.addLine("Controls:");
         telemetry.addLine("Press A - Toggle flywheel on/off");
         telemetry.addLine("Hold B  - Feed ball into flywheel");
         telemetry.addLine("Hold X  - Unfeed ball from flywheel");
-        telemetry.addLine("Hold LT - Limit the top speed of the drive train");
+        telemetry.addLine("Hold LT - Brake, limits maximum speed of robot");
         telemetry.addLine();
 
         telemetry.addLine("Launcher assembly power readings:");
-        telemetry.addData("Flywheel:     ", launcher.flywheel.getPower());
-        telemetry.addData("Left feeder:  ", launcher.leftFeeder.getPower());
-        telemetry.addData("Right feeder: ", launcher.rightFeeder.getPower());
+        telemetry.addData("- Flywheel:     ", launcher.flywheel.getPower());
+        telemetry.addLine("- Feeder:");
+        telemetry.addData("-- L:  ", launcher.leftFeeder.getPower());
+        telemetry.addData("-- R: ", launcher.rightFeeder.getPower());
         telemetry.addLine();
 
         telemetry.addLine("Drivetrain power readings:");
-        telemetry.addData("Left front:  ", leftFrontPower);
-        telemetry.addData("Right front: ", rightFrontPower);
-        telemetry.addData("Left back:   ", leftBackPower);
-        telemetry.addData("Right back:  ", rightBackPower);
+        telemetry.addData("- Max Power: ", driveTrain.maxPower);
+        telemetry.addLine("- Front:");
+        telemetry.addData("-- L: ", driveTrain.frontLeft.getPower());
+        telemetry.addData("-- R: ", driveTrain.frontRight.getPower());
+        telemetry.addLine("- Back:");
+        telemetry.addData("-- L: ", driveTrain.backLeft.getPower());
+        telemetry.addData("-- R: ", driveTrain.backRight.getPower());
         telemetry.update();
     }
 }
