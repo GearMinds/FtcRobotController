@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name="Tele Op Mode", group="Robot")
 public class TeleOpMode extends LinearOpMode {
     // Arm ticks per degree of rotation
     // comes out to around 19.792489314064724

@@ -12,7 +12,6 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@Autonomous(name="Autonomous Mode", group="Robot")
 public class AutoOpMode extends LinearOpMode {
 
     /*
