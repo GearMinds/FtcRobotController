@@ -52,7 +52,7 @@ public class MyRobotProgram extends Robot {
 
     @Override
     public void setup() throws InterruptedException {
-        driveTrain = new DriveTrain(hardwareMap);
+        driveTrain = new DriveTrain(this);
         launcher = new Launcher(hardwareMap);
     }
 }
@@ -71,7 +71,7 @@ public class MyRobotProgram extends Robot {
 
     @Override
     public void setup() throws InterruptedException {
-        driveTrain = new DriveTrain(hardwareMap);
+        driveTrain = new DriveTrain(this);
         launcher = new Launcher(hardwareMap);
     }
 
@@ -96,7 +96,7 @@ public class MyRobotProgram extends Robot {
 
     @Override
     public void setup() throws InterruptedException {
-        driveTrain = new DriveTrain(hardwareMap);
+        driveTrain = new DriveTrain(this);
         launcher = new Launcher(hardwareMap);
     }
 
@@ -126,7 +126,7 @@ public class MyRobotProgram extends Robot {
 
     @Override
     public void setup() throws InterruptedException {
-        driveTrain = new DriveTrain(hardwareMap);
+        driveTrain = new DriveTrain(this);
         launcher = new Launcher(hardwareMap);
     }
 
