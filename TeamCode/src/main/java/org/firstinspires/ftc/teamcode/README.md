@@ -112,11 +112,12 @@ public void run() throws InterruptedException {
     driveTrain.strafeRightFor(12.0);
 }
 ```
-You can also rotate the robot. Only the right direction works at the moment. This will turn the robot right for the specified degrees. This block will turn the robot at a right angle
+You can also rotate the robot. This will turn the robot right for the specified degrees. This block will turn the robot at a right angle
 ```java
 @Override
 public void run() throws InterruptedException {
-    driveTrain.rotateFor(90);
+    driveTrain.rotateLeftFor(90.0);
+    driveTrain.rotateRightFor(180.0);
 }
 ```
 ### Launcher
