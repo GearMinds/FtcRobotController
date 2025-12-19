@@ -139,6 +139,12 @@ public void run() throws InterruptedException {
 In this example we start off by starting up the flywheel. The flywheel takes a little bit of time to get up to full speed, so we can instruct the robot to wait for a specified number of milliseconds. For this we are waiting 5 seconds before turning on the feeder motors. Once the feeder is feeding, we wait an additional 5 seconds to allow the robot time to launch the ball(s). After that we need to kill the motors with the `stop` method.
 
 ## API
+### General
+`sleep(long milliseconds)`
+- Causes the CPU to do nothing for the specified amount of time. Motors that are engaged will stay engaged.
+```java
+sleep(2000); // Stop the CPU for 2 seconds
+```
 ### DriveTrain API
 `setPower(double leftFrontPower, double leftBackPower, double rightFrontPower, double rightBackPower)`
 - Directly control the power of the motors all at once. The actual power output depends on the public member variable `maxPower`.
