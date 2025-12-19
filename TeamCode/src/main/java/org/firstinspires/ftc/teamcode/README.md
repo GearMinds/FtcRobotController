@@ -188,16 +188,16 @@ driveTrain.strafeRightFor(3); // Have the robot strafe right for 3 inches.
 `rotateLeftFor(double angle)`
 - Start rotating to the left for the specified number of degrees. Accepts a `double` argument for the number of degrees.
 ```java
-driveTrain.rotateLeftFor(90); // Turn the robot at a right angle
+driveTrain.rotateLeftFor(90); // Turn the robot at a left right angle
 ```
 
 `rotateRight()`
 - Start rotating the robot to the right. 
 
 `rotateRightFor(double angle)`
-- Start rotating to the left for the specified number of degrees. Accepts a `double` argument for the number of degrees.
+- Start rotating to the right for the specified number of degrees. Accepts a `double` argument for the number of degrees.
 ```java
-driveTrain.rotateRightFor(90); // Turn the robot at a right angle
+driveTrain.rotateRightFor(90); // Turn the robot at a right right angle
 ```
 `stop()`
 - Stop all drive train motion.
