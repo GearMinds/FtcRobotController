@@ -143,7 +143,7 @@ public class DriveTrain {
         strafeRightFor(-inches);
     }
 
-    public void turnRightFor(double angle) {
+    public void turnFor(double angle) {
         double power, error = angle - getHeading();
 
         while (robot.opModeIsActive() && Math.abs(error) > 1.0) {
@@ -158,27 +158,6 @@ public class DriveTrain {
             backLeft.setPower(power);
             frontRight.setPower(-power);
             backRight.setPower(-power);
-        }
-
-        setDriveMotorsPower(0);
-        imu.resetYaw();
-    }
-
-    public void turnLeftFor(double angle) {
-        double power, error = angle - getHeading();
-
-        while (robot.opModeIsActive() && Math.abs(error) > 1.0) {
-            error = angle - getHeading();
-            power = getCorrectionPower(error);
-
-            robot.telemetry.addData("error: ", error);
-            robot.telemetry.addData("power: ", power);
-            robot.telemetry.update();
-
-            frontLeft.setPower(-power);
-            backLeft.setPower(-power);
-            frontRight.setPower(power);
-            backRight.setPower(power);
         }
 
         setDriveMotorsPower(0);

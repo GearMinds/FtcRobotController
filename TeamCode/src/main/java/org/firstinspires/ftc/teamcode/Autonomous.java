@@ -27,7 +27,7 @@ public class Autonomous extends Robot {
         driveTrain.strafeLeftFor(12);
         driveTrain.driveBackwardFor(12);
 
-        driveTrain.turnRightFor(90);
-        driveTrain.turnLeftFor(180);
+        driveTrain.turnFor(90);
+        driveTrain.turnFor(-180);
     }
 }

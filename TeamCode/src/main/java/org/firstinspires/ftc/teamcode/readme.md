@@ -139,18 +139,29 @@ public class MyRobotProgram extends Robot {
 The tele-op code for this year is already defined under `TeleOp.java`. If you have changes to make, _please_ make them there. No one should be creating a new TeleOp program in 2025/2026.
 
 ### DriveTrain
-The drive train class is an easy way to interface with the motors that drive the mecanum wheels for the robot. We defined a variable `driveTrain`. We will use this `DriveTrain` object as an example here. Let's begin our example program by moving the robot 150cm forward.
+The drive train class is an easy way to interface with the motors that drive the mecanum wheels for the robot. We defined a variable `driveTrain`. We will use this `DriveTrain` object as an example here. Let's begin our example program by moving the robot 1 foot forward, then 1/2 a foot backward.
 ```java
 @Override
 public void run() throws InterruptedException {
-
-    driveTrain.moveForwardForMM(150);
-    driveTrain.moveForwardForCM(150);
-    driveTrain.moveForwardForM(150);
-    
+    driveTrain.moveForwardFor(12.0);
+    driveTrain.moveBackwardFor(6.0);
 }
 ```
-
+We can also strafe left and right. This block of code will strafe the robot 1 foot to the left and back.
+```java
+@Override
+public void run() throws InterruptedException {
+    driveTrain.strafeLeftFor(12.0);
+    driveTrain.strafeRightFor(12.0);
+}
+```
+You can also rotate the robot. Only the right direction works at the moment. This will turn the robot right for the specified degrees. This block will turn the robot at a right angle
+```java
+@Override
+public void run() throws InterruptedException {
+    driveTrain.turnfor(90);
+}
+```
 #### Coaches:
 - Parker
 - Binod
