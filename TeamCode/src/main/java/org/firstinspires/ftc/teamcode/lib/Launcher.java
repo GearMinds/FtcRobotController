@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.lib;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Launcher {
@@ -10,6 +11,10 @@ public class Launcher {
     public DcMotor flywheel;
 
     private boolean isSpinning = false;
+    public boolean isLaunching = false;
+
+    private final double DEFAULT_FEED_THRESHOLD = 2000.0;
+    public double feedThreshold = DEFAULT_FEED_THRESHOLD;
 
     public Launcher(HardwareMap hardwareMap) {
         this(
@@ -26,8 +31,10 @@ public class Launcher {
     }
 
     public void feed() {
-        leftFeeder.setPower(1.0);
-        rightFeeder.setPower(-1.0);
+        if (!isLaunching || ((DcMotorEx) flywheel).getVelocity() > feedThreshold) {
+            leftFeeder.setPower(1.0);
+            rightFeeder.setPower(-1.0);
+        }
     }
 
     public void backFeed() {
@@ -59,7 +66,20 @@ public class Launcher {
         }
     }
 
+    public void launch() {
+        isLaunching = true;
+        spinFlywheel();
+        feed();
+    }
+
+    public void launchAt(double velocity) {
+        feedThreshold = velocity;
+        launch();
+    }
+
     public void stop() {
+        feedThreshold = DEFAULT_FEED_THRESHOLD;
+        isLaunching = false;
         stopFlywheel();
         stopFeeder();
     }

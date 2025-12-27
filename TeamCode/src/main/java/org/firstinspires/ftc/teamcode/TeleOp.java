@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
 import org.firstinspires.ftc.teamcode.lib.DriveTrain;
 import org.firstinspires.ftc.teamcode.lib.Launcher;
 import org.firstinspires.ftc.teamcode.lib.Robot;
@@ -34,6 +37,8 @@ public class TeleOp extends Robot {
             launcher.toggleFlywheel();
         }
 
+        double flywheelVelocity = ((DcMotorEx)launcher.flywheel).getVelocity();
+
         // B - Begin feeding balls
         // X (Hold) - Reverse feed balls
         if (gamepad1.b) {
@@ -44,6 +49,12 @@ public class TeleOp extends Robot {
             launcher.backFeed();
         } else {
             launcher.stopFeeder();
+        }
+
+        if (gamepad1.right_trigger > 0.5) {
+            launcher.launch();
+        } else if (launcher.isLaunching) {
+            launcher.stop();
         }
 
         // Apply breaking
@@ -61,7 +72,8 @@ public class TeleOp extends Robot {
         telemetry.addLine();
 
         telemetry.addLine("Launcher assembly power readings:");
-        telemetry.addData("- Flywheel:     ", launcher.flywheel.getPower());
+        telemetry.addData("- Flywheel p: ", launcher.flywheel.getPower());
+        telemetry.addData("- Flywheel v: ", flywheelVelocity);
         telemetry.addLine("- Feeder:");
         telemetry.addData("-- L:  ", launcher.leftFeeder.getPower());
         telemetry.addData("-- R: ", launcher.rightFeeder.getPower());

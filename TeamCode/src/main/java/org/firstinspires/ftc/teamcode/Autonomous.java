@@ -9,8 +9,6 @@ public class Autonomous extends Robot {
     DriveTrain driveTrain;
     Launcher launcher;
 
-    double speed = 0.2;
-
     @Override
     public void setup() throws InterruptedException {
         driveTrain = new DriveTrain(this);
@@ -21,5 +19,20 @@ public class Autonomous extends Robot {
     public void run() throws InterruptedException {
         // Main autonomous code goes here...
         // See README.md for API documentation
+
+        driveTrain.setSpeed(0.5);
+
+        driveTrain.forward();
+        driveTrain.stop();
+
+        driveTrain.forwardFor(20);
+
+        driveTrain.rotateLeftFor(180);
+
+        launcher.spinFlywheel();
+
+        sleep(2500);
+
+        launcher.feed();
     }
 }

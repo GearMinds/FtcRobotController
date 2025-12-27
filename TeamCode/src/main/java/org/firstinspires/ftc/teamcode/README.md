@@ -210,6 +210,15 @@ driveTrain.rotateRightFor(90); // Turn the robot at a right right angle
 - Stop all drive train motion.
 
 ### Launcher API
+`launch()`
+- Start spinning the flywheel, and feed the balls into the launcher as soon as the flywheel is up to speed (2000.0)
+
+`launchAt(double velocity)`
+- Start spinning the flywheel, and feed the balls into the launcher as soon as the flywheel is up to the specified velocity. Velocity is passed in as a double. 
+```java
+launcher.launchAt(1500.0); // Start feeding balls at 1500.0 instead of 2000.0
+```
+
 `feed()`
 - Start feeding balls into the flywheel area.
 
