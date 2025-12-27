@@ -19,5 +19,16 @@ public class Autonomous extends Robot {
     public void run() throws InterruptedException {
         // Main autonomous code goes here...
         // See README.md for API documentation
+        driveTrain.reverseFor(36.0); // Moves back 3 feet
+        
+            launcher.spinFlywheel();
+
+            sleep(5000); // wait for 5000 ms before executing the next instruction
+
+            launcher.feed();
+
+            sleep(5000);
+
+            launcher.stop();
     }
 }
