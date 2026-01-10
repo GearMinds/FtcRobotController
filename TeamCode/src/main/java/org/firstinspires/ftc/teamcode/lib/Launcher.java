@@ -10,77 +10,88 @@ public class Launcher {
     public CRServo rightFeeder, leftFeeder;
     public DcMotor flywheel;
 
-    private boolean isSpinning = false;
-    public boolean isLaunching = false;
+    private int feedDirection = 0;
+    private boolean spinning = false;
 
+    private final Robot robot;
     private final double DEFAULT_FEED_THRESHOLD = 2000.0;
     public double feedThreshold = DEFAULT_FEED_THRESHOLD;
 
-    public Launcher(HardwareMap hardwareMap) {
-        this(
-                hardwareMap.get(DcMotor.class, "flywheel"),
-                hardwareMap.get(CRServo.class, "feeder_l"),
-                hardwareMap.get(CRServo.class, "feeder_r")
-        );
+    public Launcher(Robot robot) {
+        this.flywheel = robot.hardwareMap.get(DcMotor.class, "flywheel");
+        this.leftFeeder = robot.hardwareMap.get(CRServo.class, "feeder_l");
+        this.rightFeeder = robot.hardwareMap.get(CRServo.class, "feeder_r");
+        this.robot = robot;
     }
 
-    public Launcher(DcMotor flywheel, CRServo leftFeeder, CRServo rightFeeder) {
-        this.flywheel = flywheel;
-        this.leftFeeder = leftFeeder;
-        this.rightFeeder = rightFeeder;
-    }
-
-    public void feed() {
-        if (!isLaunching || ((DcMotorEx) flywheel).getVelocity() > feedThreshold) {
-            leftFeeder.setPower(1.0);
-            rightFeeder.setPower(-1.0);
+    private void setFeederState(double leftPower, double rightPower, int direction) {
+        if (this.feedDirection != direction) {
+            this.leftFeeder.setPower(leftPower);
+            this.rightFeeder.setPower(rightPower);
+            this.feedDirection = direction;
         }
     }
 
+    public void feed() {
+        setFeederState(1.0, -1.0, 1);
+    }
+
     public void backFeed() {
-        leftFeeder.setPower(-1.0);
-        rightFeeder.setPower(1.0);
+        setFeederState(-1.0, 1.0, -1);
     }
 
     public void stopFeeder() {
-        leftFeeder.setPower(0.0);
-        rightFeeder.setPower(0.0);
+        setFeederState(0.0, 0.0, 0);
+    }
+
+    public void feedIfReady() {
+        if (!this.spinning || ((DcMotorEx) this.flywheel).getVelocity() > this.feedThreshold) {
+            this.feed();
+        } else {
+            this.stopFeeder();
+        }
+    }
+
+    public boolean isSpinning() {
+        return this.spinning;
     }
 
     public void spinFlywheel() {
-        isSpinning = true;
         flywheel.setPower(1.0);
+        this.spinning = true;
     }
 
     public void stopFlywheel() {
-        isSpinning = false;
         flywheel.setPower(0.0);
+        this.spinning = false;
     }
 
     public void toggleFlywheel() {
-        isSpinning = !isSpinning;
-        if (isSpinning) {
+        this.spinning = !this.spinning;
+        if (this.spinning) {
             spinFlywheel();
         } else {
             stopFlywheel();
         }
     }
 
-    public void launch() {
-        isLaunching = true;
-        spinFlywheel();
-        feed();
-    }
+    public void launchFor(double seconds) {
+        long milliseconds = ((long) seconds) * 1000;
+        final long sample = 100;
 
-    public void launchAt(double velocity) {
-        feedThreshold = velocity;
-        launch();
+        this.spinFlywheel();
+
+        while (milliseconds > 0) {
+            milliseconds -= sample;
+            this.feedIfReady();
+            this.robot.sleep(sample);
+        }
+
+        this.stop();
     }
 
     public void stop() {
-        feedThreshold = DEFAULT_FEED_THRESHOLD;
-        isLaunching = false;
-        stopFlywheel();
-        stopFeeder();
+        this.stopFlywheel();
+        this.stopFeeder();
     }
 }

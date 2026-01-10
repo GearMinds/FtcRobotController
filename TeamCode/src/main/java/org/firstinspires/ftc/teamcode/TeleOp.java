@@ -15,7 +15,7 @@ public class TeleOp extends Robot {
     @Override
     public void setup() throws InterruptedException {
         driveTrain = new DriveTrain(this);
-        launcher = new Launcher(hardwareMap);
+        launcher = new Launcher(this);
     }
 
     @Override
@@ -52,8 +52,13 @@ public class TeleOp extends Robot {
         }
 
         if (gamepad1.right_trigger > 0.5) {
-            launcher.launch();
-        } else if (launcher.isLaunching) {
+            if (launcher.isSpinning()) {
+                // Start shooting the ball if we're already spinning
+                launcher.feedIfReady();
+            } else {
+                launcher.spinFlywheel();
+            }
+        } else if (launcher.isSpinning()) {
             launcher.stop();
         }
 

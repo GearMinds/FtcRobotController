@@ -12,7 +12,7 @@ public class Autonomous extends Robot {
     @Override
     public void setup() throws InterruptedException {
         driveTrain = new DriveTrain(this);
-        launcher = new Launcher(hardwareMap);
+        launcher = new Launcher(this);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class Autonomous extends Robot {
         // See README.md for API documentation
         driveTrain.setSpeed(0.5); // half speed for movement
         driveTrain.reverseFor(36.0); // Moves back 3 feet
-        launcher.launch(); // Launch
-        sleep(10000);
+
+        launcher.launchFor(10); // Launch for 10 1/2 seconds
     }
 }
