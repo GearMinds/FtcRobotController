@@ -22,6 +22,6 @@ public class Autonomous extends Robot {
         driveTrain.setSpeed(0.5); // half speed for movement
         driveTrain.reverseFor(36.0); // Moves back 3 feet
 
-        launcher.launchFor(10); // Launch for 10 1/2 seconds
+        launcher.launchFor(12);
     }
 }

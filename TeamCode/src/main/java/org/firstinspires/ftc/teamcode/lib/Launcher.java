@@ -66,8 +66,7 @@ public class Launcher {
     }
 
     public void toggleFlywheel() {
-        this.spinning = !this.spinning;
-        if (this.spinning) {
+        if (!this.spinning) {
             spinFlywheel();
         } else {
             stopFlywheel();
