@@ -13,7 +13,7 @@ public class Launcher {
     private boolean spinning = false;
 
     private final Robot robot;
-    private final double DEFAULT_FEED_THRESHOLD = 2000.0;
+    private final double DEFAULT_FEED_THRESHOLD = 2100.0;
     public double feedThreshold = DEFAULT_FEED_THRESHOLD;
 
     public Launcher(Robot robot) {
