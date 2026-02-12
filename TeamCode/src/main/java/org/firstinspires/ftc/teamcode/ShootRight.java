@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.lib.Launcher;
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Shoot", group="Robot")
-public class Shoot extends Robot {
+public class ShootRight extends Robot {
     DriveTrain driveTrain;
     Launcher launcher;
 
@@ -23,5 +23,7 @@ public class Shoot extends Robot {
         driveTrain.reverseFor(36.0); // Moves back 3 feet
 
         launcher.launchFor(12);
+
+        driveTrain.strafeRightFor(18.0);
     }
 }
