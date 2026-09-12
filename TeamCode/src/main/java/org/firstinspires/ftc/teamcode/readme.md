@@ -9,7 +9,7 @@ adb connect 192.168.43.1
 ```
 Note for Windows users: If your terminal says that the command is not found, you can try this command instead:
 ```
-C:\Users\$env:username\AppData\Local\Android\Sdk\platform-tools\adb.exe connect 192.168.43.1
+C:\Users\student\AppData\Local\Android\Sdk\platform-tools\adb.exe connect 192.168.43.1
 ```
 You should see the robot appear as the device in android studio. Build and upload your code by clicking the play button.
 
