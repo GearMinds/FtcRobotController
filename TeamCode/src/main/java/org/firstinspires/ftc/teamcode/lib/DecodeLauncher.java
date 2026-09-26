@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-public class Launcher {
+public class DecodeLauncher {
 
     public CRServo rightFeeder, leftFeeder;
     public DcMotor flywheel;
@@ -16,7 +16,7 @@ public class Launcher {
     private final double DEFAULT_FEED_THRESHOLD = 2100.0;
     public double feedThreshold = DEFAULT_FEED_THRESHOLD;
 
-    public Launcher(Robot robot) {
+    public DecodeLauncher(Robot robot) {
         this.flywheel = robot.hardwareMap.get(DcMotor.class, "flywheel");
         this.leftFeeder = robot.hardwareMap.get(CRServo.class, "feeder_l");
         this.rightFeeder = robot.hardwareMap.get(CRServo.class, "feeder_r");

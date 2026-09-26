@@ -34,38 +34,42 @@ This abstract class requires that we define a method called `setup`. This method
 
 ```java
 package org.firstinspires.ftc.teamcode;
+
 import org.firstinspires.ftc.teamcode.lib.DriveTrain;
-import org.firstinspires.ftc.teamcode.lib.Launcher;
+import org.firstinspires.ftc.teamcode.lib.DecodeLauncher;
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="MyAutonomous", group="Robot")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "MyAutonomous", group = "Robot")
 public class MyRobotProgram extends Robot {
     DriveTrain driveTrain;
-    Launcher launcher;
+    DecodeLauncher launcher;
 
     @Override
     public void setup() throws InterruptedException {
         driveTrain = new DriveTrain(this);
-        launcher = new Launcher(hardwareMap);
+        launcher = new DecodeLauncher(hardwareMap);
     }
 }
 ```
 Finally, to actually start writing code, our main entry point is in a method called `run`. Define the method like so to start writing routines for the robot.
+
 ```java
 package org.firstinspires.ftc.teamcode;
+
+import org.firstinspires.ftc.teamcode.lib.DecodeLauncher;
 import org.firstinspires.ftc.teamcode.lib.DriveTrain;
-import org.firstinspires.ftc.teamcode.lib.Launcher;
+import org.firstinspires.ftc.teamcode.lib.DecodeLauncher;
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="MyAutonomous", group="Robot")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name = "MyAutonomous", group = "Robot")
 public class MyRobotProgram extends Robot {
     DriveTrain driveTrain;
-    Launcher launcher;
+    DecodeLauncher launcher;
 
     @Override
     public void setup() throws InterruptedException {
         driveTrain = new DriveTrain(this);
-        launcher = new Launcher(hardwareMap);
+        launcher = new DecodeLauncher(hardwareMap);
     }
 
     @Override

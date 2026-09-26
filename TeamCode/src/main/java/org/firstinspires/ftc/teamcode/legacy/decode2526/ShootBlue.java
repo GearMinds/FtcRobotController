@@ -1,18 +1,18 @@
 package org.firstinspires.ftc.teamcode.legacy.decode2526;
 
 import org.firstinspires.ftc.teamcode.lib.DriveTrain;
-import org.firstinspires.ftc.teamcode.lib.Launcher;
+import org.firstinspires.ftc.teamcode.lib.DecodeLauncher;
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Shoot", group="Robot")
 public class ShootBlue extends Robot {
     DriveTrain driveTrain;
-    Launcher launcher;
+    DecodeLauncher launcher;
 
     @Override
     public void setup() throws InterruptedException {
         driveTrain = new DriveTrain(this);
-        launcher = new Launcher(this);
+        launcher = new DecodeLauncher(this);
     }
 
     @Override

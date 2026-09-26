@@ -2,21 +2,21 @@ package org.firstinspires.ftc.teamcode.legacy.decode2526;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.lib.DecodeLauncher;
 import org.firstinspires.ftc.teamcode.lib.DriveTrain;
-import org.firstinspires.ftc.teamcode.lib.Launcher;
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Tele Op", group="Robot")
 public class TeleOp extends Robot {
     DriveTrain driveTrain;
-    Launcher launcher;
+    DecodeLauncher launcher;
 
     boolean launching = false;
 
     @Override
     public void setup() throws InterruptedException {
         driveTrain = new DriveTrain(this);
-        launcher = new Launcher(this);
+        launcher = new DecodeLauncher(this);
     }
 
     @Override
