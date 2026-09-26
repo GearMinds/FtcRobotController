@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.legacy.decode2526;
 
 import org.firstinspires.ftc.teamcode.lib.DriveTrain;
 import org.firstinspires.ftc.teamcode.lib.Launcher;
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Leave", group="Robot")
-public class Leave extends Robot {
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Shoot", group="Robot")
+public class ShootRed extends Robot {
     DriveTrain driveTrain;
     Launcher launcher;
 
@@ -19,7 +19,11 @@ public class Leave extends Robot {
     public void run() throws InterruptedException {
         // Main autonomous code goes here...
         // See README.md for API documentation
-        sleep(27000);
-        driveTrain.reverseFor(12);
+        driveTrain.setSpeed(0.5); // half speed for movement
+        driveTrain.reverseFor(36.0); // Moves back 3 feet
+
+        launcher.launchFor(12);
+
+        driveTrain.strafeRightFor(18.0);
     }
 }
