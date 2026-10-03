@@ -4,7 +4,7 @@ import org.firstinspires.ftc.teamcode.lib.DecodeLauncher;
 import org.firstinspires.ftc.teamcode.lib.DriveTrain;
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Leave", group="Robot")
+//@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Leave", group="Robot")
 public class Leave extends Robot {
     DriveTrain driveTrain;
     DecodeLauncher launcher;

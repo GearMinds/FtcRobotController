@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.lib.DecodeLauncher;
 import org.firstinspires.ftc.teamcode.lib.DriveTrain;
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Tele Op", group="Robot")
+// @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Tele Op", group="Robot")
 public class TeleOp extends Robot {
     DriveTrain driveTrain;
     DecodeLauncher launcher;
