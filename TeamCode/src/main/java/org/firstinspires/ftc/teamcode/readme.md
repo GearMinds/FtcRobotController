@@ -1,6 +1,7 @@
 # FTC 2025/2026 - Team 26644
 Team documentation / FAQs
 ## Connect to the robot from your personal device
+0. IMPORTANT: If you have not built the code yet, click the hammer icon in the top right. You will not be able to download the required libraries if you are connected to the robot at this step.
 1. Connect to the robot's WiFi. The SSID should be `26644-RC`, and the password is `Love2code!`.
 2. Next, open up the terminal on _Android Studio_. You can do this by pressing `Alt+F12`.
 3. In the terminal, type the following command and hit enter.
