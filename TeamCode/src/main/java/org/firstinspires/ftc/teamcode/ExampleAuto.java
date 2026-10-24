@@ -7,7 +7,6 @@ import org.firstinspires.ftc.teamcode.lib.Robot;
 public class ExampleAuto extends Robot {
     DriveTrain driveTrain;
 
-    @Override
     public void setup() throws InterruptedException {
         driveTrain = new DriveTrain(this);
     }
