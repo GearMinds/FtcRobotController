@@ -1,15 +1,19 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.teamcode.lib.DriveTrain;
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Tele Op", group="Robot")
 public class TeleOp extends Robot {
     DriveTrain driveTrain;
+    DcMotor intakeMotor;
 
     @Override
     public void setup() throws InterruptedException {
         driveTrain = new DriveTrain(this);
+        intakeMotor = this.hardwareMap.get(DcMotor.class, "intake");
     }
 
     @Override
@@ -28,6 +32,12 @@ public class TeleOp extends Robot {
 
         // Apply breaking
         driveTrain.maxPower = 1.0 - gamepad1.left_trigger;
+
+        if (gamepad1.a) {
+            intakeMotor.setPower(1.0);
+        } else {
+            intakeMotor.setPower(0.0);
+        }
 
         // Set the drive train power
         driveTrain.setPower(leftFrontPower, leftBackPower, rightFrontPower, rightBackPower);

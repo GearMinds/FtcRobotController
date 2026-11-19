@@ -6,10 +6,13 @@ import org.firstinspires.ftc.teamcode.lib.DecodeLauncher;
 import org.firstinspires.ftc.teamcode.lib.DriveTrain;
 import org.firstinspires.ftc.teamcode.lib.Robot;
 
-// @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Tele Op", group="Robot")
-public class TeleOp extends Robot {
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Legacy Tele Op", group="Robot")
+public class LegacyTeleOp extends Robot {
     DriveTrain driveTrain;
     DecodeLauncher launcher;
+    DcMotorEx intakeMotor;
+
+    DcMotorEx flywheel;
 
     boolean launching = false;
 
@@ -17,6 +20,8 @@ public class TeleOp extends Robot {
     public void setup() throws InterruptedException {
         driveTrain = new DriveTrain(this);
         launcher = new DecodeLauncher(this);
+        intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
+        flywheel = hardwareMap.get(DcMotorEx.class, "flywheel");
     }
 
     @Override
@@ -64,7 +69,18 @@ public class TeleOp extends Robot {
             launching = false;
             launcher.stop();
         }
+        if (gamepad1.right_bumper) {
+            intakeMotor.setPower(1.0);
+        }
 
+// Left bumper - reverse intake
+        else if (gamepad1.left_bumper) {
+            intakeMotor.setPower(-1.0);
+        }
+
+        else {
+            intakeMotor.setPower(0);
+        }
         // Apply breaking
         driveTrain.maxPower = 1.0 - gamepad1.left_trigger;
 

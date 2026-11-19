@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 public class DecodeLauncher {
 
     public CRServo rightFeeder, leftFeeder;
-    public DcMotor flywheel;
+    public DcMotorEx flywheel;
 
     private int feedDirection = 0;
     private boolean spinning = false;
@@ -17,7 +17,7 @@ public class DecodeLauncher {
     public double feedThreshold = DEFAULT_FEED_THRESHOLD;
 
     public DecodeLauncher(Robot robot) {
-        this.flywheel = robot.hardwareMap.get(DcMotor.class, "flywheel");
+        this.flywheel = robot.hardwareMap.get(DcMotorEx.class, "flywheel");
         this.leftFeeder = robot.hardwareMap.get(CRServo.class, "feeder_l");
         this.rightFeeder = robot.hardwareMap.get(CRServo.class, "feeder_r");
         this.robot = robot;
