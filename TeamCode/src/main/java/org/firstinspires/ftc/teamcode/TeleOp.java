@@ -30,12 +30,11 @@ public class TeleOp extends Robot {
         double leftBackPower = translateX - translateZ + rotate;
         double rightBackPower = translateX + translateZ - rotate;
 
-        // Apply breaking
-        driveTrain.maxPower = 1.0 - gamepad1.left_trigger;
 
-        if (gamepad1.a) {
+
+        if (gamepad1.right_trigger > 0) {
             intakeMotor.setPower(1.0);
-        } else if (gamepad1.b) {
+        } else if (gamepad1.left_trigger > 0) {
             intakeMotor.setPower(-1.0);
         } else {
             intakeMotor.setPower(0.0);
