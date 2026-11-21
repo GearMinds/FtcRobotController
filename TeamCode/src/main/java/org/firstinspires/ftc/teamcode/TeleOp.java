@@ -35,6 +35,8 @@ public class TeleOp extends Robot {
 
         if (gamepad1.a) {
             intakeMotor.setPower(1.0);
+        } else if (gamepad1.b) {
+            intakeMotor.setPower(-1.0);
         } else {
             intakeMotor.setPower(0.0);
         }
